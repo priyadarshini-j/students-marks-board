@@ -1,0 +1,76 @@
+{
+  "students": [
+    {
+      "sno": 1,
+      "name": "Arun",
+      "tamil": 85,
+      "english": 78,
+      "maths": 90,
+      "science": 88,
+      "social": 82,
+      "total": 423,
+      "percentage": 84.6,
+      "result": "Pass"
+    },
+    {
+      "sno": 2,
+      "name": "Priya",
+      "tamil": 92,
+      "english": 89,
+      "maths": 95,
+      "science": 91,
+      "social": 94,
+      "total": 461,
+      "percentage": 92.2,
+      "result": "Pass"
+    },
+    {
+      "sno": 3,
+      "name": "Karthik",
+      "tamil": 65,
+      "english": 70,
+      "maths": 55,
+      "science": 68,
+      "social": 72,
+      "total": 330,
+      "percentage": 66,
+      "result": "Pass"
+    },
+    {
+      "sno": 4,
+      "name": "Divya",
+      "tamil": 45,
+      "english": 38,
+      "maths": 55,
+      "science": 60,
+      "social": 48,
+      "total": 246,
+      "percentage": 49.2,
+      "result": "Fail"
+    },
+    {
+      "sno": 5,
+      "name": "Vijay",
+      "tamil": 88,
+      "english": 82,
+      "maths": 76,
+      "science": 90,
+      "social": 85,
+      "total": 421,
+      "percentage": 84.2,
+      "result": "Pass"
+    },
+    {
+      "sno": 6,
+      "name": "Sneha",
+      "tamil": 35,
+      "english": 42,
+      "maths": 30,
+      "science": 55,
+      "social": 60,
+      "total": 222,
+      "percentage": 44.4,
+      "result": "Fail"
+    }
+  ]
+}
