@@ -1,56 +1,25 @@
-<<<<<<< HEAD
-import React from 'react';
-import './App.css';
-import StudentMarksBoard from './features/component/studentMarksBoard';
-
-function App() {
-  return (
-    <>
-    <StudentMarksBoard/>
-    </>
-  )
-}
-
-export default App
-=======
 
 import React, { useEffect, useState } from "react";
 import "./App.css";
 
 import studentsData from "./data/data.js";
 import StudentMarksBoard from "./features/component/studentMarksBoard.jsx";
+import getStudentData from "./features/component/studentTable/getStudentdata/GetStudentData.jsx";
+import addStudentData from "./features/component/addStudentForm/AddStudentData/addStudentData.jsx";
+import deleteStudentData from "./features/component/studentTable/DeleteStudentData/deleteStudentData.jsx";
 
 function App() {
-  const [students, setStudents] = useState(studentsData);
+  const [students, setStudents] = useState([])
 
-  // const [students, setStudents] = useState(() => {
-  //   const savedData = localStorage.getItem("students");
+  useEffect(() => {
+    const fetchStudents = async () => {
+      const data = await getStudentData();
+      setStudents(data);
+    };
 
-  //   if (savedData) {
-  //     const parsedData = JSON.parse(savedData);
-
-  //     // Combine default data and saved data
-  //     const combinedData = [
-  //       ...studentsData,
-  //       ...parsedData.filter(
-  //         saved => !studentsData.some(
-  //           item => item.id === saved.id
-  //         )
-  //       )
-  //     ];
-
-  //     return combinedData;
-  //   }
-
-  //   return studentsData;
-  // });
-
-  // // Save student data
-  // useEffect(() => {
-  //   localStorage.setItem("students", JSON.stringify(students));
-  // }, [students]);
-
-  function handleAddStudent(newStudent) {
+    fetchStudents();
+  }, []);
+  async function handleAddStudent(newStudent) {
 
     const total =
       Number(newStudent.tamil) +
@@ -60,37 +29,55 @@ function App() {
       Number(newStudent.social);
 
     const percentage = total / 5;
-    setStudents((prevStudents) => {
 
-      const student = {
-        id: Date.now(),
-        sno: prevStudents.length + 1,
-        ...newStudent,
-        total,
-        percentage,
-        result: newStudent.tamil >= 35 &&
+    const student = {
+      ...newStudent,
+      total,
+      percentage,
+      result:
+        newStudent.tamil >= 35 &&
           newStudent.english >= 35 &&
           newStudent.maths >= 35 &&
           newStudent.science >= 35 &&
-          newStudent.social >= 35 ? "Pass" : "Fail"
-      };
+          newStudent.social >= 35
+          ? "Pass"
+          : "Fail"
+    };
 
-      return [...prevStudents, student];
-    });
+    try {
+      const savedStudent = await addStudentData(student);
+
+      setStudents((prevStudents) => [
+        ...prevStudents,
+        savedStudent
+      ]);
+
+    } catch (error) {
+      console.error(error);
+    }
   }
 
-  const handleDeleteStudent = (id) => {
-    setStudents((prevStudents) =>
-      prevStudents.filter((item) => item.id !== id)
-    );
-  };
+const handleDeleteStudent = async (id) => {
+    try {
+        await deleteStudentData(id);
+
+        setStudents((prevStudents) =>
+            prevStudents.filter((item) => item.id !== id)
+        );
+
+    } catch (error) {
+        console.error("Delete error:", error);
+    }
+};
+
+
   return (
     <StudentMarksBoard
       students={students}
       handleAddStudent={handleAddStudent}
+      handleDeleteStudent={handleDeleteStudent}
     />
   );
 }
 
 export default App;
->>>>>>> 6cc08d4 (updated student board)
