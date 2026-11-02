@@ -1,0 +1,71 @@
+.student-form-container {
+    margin: auto;
+    width: 72%;
+    padding: 10px 20px;
+    border-radius: 15px;
+    background-color: #ffff;
+    height: 120px;
+    border: 1px solid rgb(172, 171, 171);
+}
+
+.add-student-form {
+    font-size: 24px;
+    font-weight: 600;
+    margin: 10px;
+}
+
+.form-input-group {
+    padding: 10px;
+    margin: 10px;
+    outline: none;
+    border-radius: 10px;
+    border: 1px solid rgb(172, 171, 171);
+    width: 110px;
+}
+.submit{
+    padding: 10px;
+    margin: 10px;
+    outline: none;
+    border-radius: 10px;
+    border: 1px solid rgb(172, 171, 171);
+    width: 100px;
+    background-color: #1F4D3A;
+    color: #ffff;
+    width: 200px;
+
+}
+.submit:hover{
+    cursor: pointer;
+}
+.add-student-form,
+.student-table-header {
+    font-family: Georgia, serif;
+    font-weight: 700;
+}
+@media screen and (max-width: 480px) {
+    .student-form-container {
+        width: 90%;
+        margin: 20px auto;
+        padding: 12px;
+        height: auto;
+    }
+
+    .add-student-form {
+        font-size: 20px;
+        margin: 8px;
+    }
+
+    .add-student-details {
+        width:100%;
+        margin: 8px 0;
+        padding: 12px;
+        box-sizing: border-box;
+    }
+
+    .add-button {
+        width: 100%;
+        margin: 8px 0;
+        padding: 12px;
+    }
+
+}
