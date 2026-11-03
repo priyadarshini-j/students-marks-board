@@ -1,0 +1,59 @@
+.state-card {
+    margin: 20px; 
+    width: 15%;
+    padding: 10px 20px;
+    border-radius: 15px;
+    background-color: #ffff;
+    height: 80px;
+    border: 1px solid rgb(172, 171, 171);
+}
+
+.student-state-container {
+    margin: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.state-card-fields {
+    color: rgb(53, 52, 52);
+    font-size: 20px;
+    font-weight: 500;
+    margin: 10px;
+}
+
+.student-card-count {
+    font-size: 24px;
+    font-weight: 800;
+    margin: 10px;
+
+}
+@media screen and (max-width: 480px) {
+    .student-state-container {
+        margin: 15px;
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+    }
+
+    .state-card {
+        width: 90%;
+        height: auto;
+        min-height: 80px;
+        margin: 0;
+        padding: 10px;
+    }
+
+    .state-card-fields {
+        font-size: 14px;
+        margin: 5px;
+    }
+
+    .student-card-count {
+        font-size: 25px;
+        margin: 5px;
+    }
+}
+
+
