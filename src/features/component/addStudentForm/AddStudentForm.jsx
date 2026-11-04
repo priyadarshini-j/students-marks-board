@@ -12,7 +12,6 @@ function AddStudentForm({
     const [maths, setMaths] = useState("");
     const [science, setScience] = useState("");
     const [social, setSocial] = useState("");
-
     useEffect(() => {
         if (selectedStudent) {
             setName(selectedStudent.name);
