@@ -18,7 +18,7 @@
 .student-table-list{
     width: stretch;
     border-collapse: collapse;
-    font-family: Arial, sans-serif;
+    
 }
 
 .table-data{
@@ -100,6 +100,16 @@ td {
 }
 .action-edit:hover{
     cursor: pointer;
+}
+.student-name-link {
+    cursor: pointer;
+    color: #050507;
+    font-weight: 600;
+    transition: 0.2s;
+}
+
+.student-name-link:hover {
+    color: #096339;
 }
 
 

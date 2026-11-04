@@ -1,0 +1,10 @@
+.home-button{
+    padding: 10px;
+    background-color:#1F4D3A ;
+    color: #ffff;
+    outline: none;
+    border: none;
+}
+.home-button:hover{
+    cursor: pointer;
+}

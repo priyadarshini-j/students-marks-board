@@ -6,7 +6,27 @@
     padding: 20px 40px;
     color: #ffffff;
 }
+.header-nav {
+    display: flex;
+    gap: 20px;
+    margin-top: 20px;
+}
 
+.header-nav a {
+    text-decoration: none;
+    color: #f7f4f4;
+    padding: 8px 15px;
+    border-radius: 5px;
+}
+
+.header-nav a.active {
+    background-color: #338f56;
+    color: white;
+}
+.header-details{
+    display: flex;
+    justify-content: space-between;
+}
 
 @media screen and (max-width: 480px) {
     .header-container {
@@ -19,7 +39,6 @@
     }
 }
 .student-class {
-    font-family: Georgia, serif;
     font-size: 30px;
     font-weight: 700;
 }

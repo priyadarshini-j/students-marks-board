@@ -40,7 +40,7 @@
 }
 .add-student-form,
 .student-table-header {
-    font-family: Georgia, serif;
+    
     font-weight: 700;
 }
 @media screen and (max-width: 480px) {

@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import "./StudentTable.css";
+import { useNavigate } from "react-router-dom";
 
-function StudentTable({ students,handleDeleteStudent }) {
+function StudentTable({ students, handleDeleteStudent, handleEditStudent, loading, error }) {
 
     const [sortOrder, setSortOrder] = useState(false);
+    const navigate = useNavigate();
 
     const sortedStudents = [...students].sort((a, b) => {
         return sortOrder
@@ -16,8 +18,8 @@ function StudentTable({ students,handleDeleteStudent }) {
     };
 
     const highestMark = students.length > 0
-        ? Math.max(...students.map((item) => item.total)): 0;
-        
+        ? Math.max(...students.map((item) => item.total)) : 0;
+
 
     return (
         <div className="student-table-container">
@@ -53,21 +55,40 @@ function StudentTable({ students,handleDeleteStudent }) {
 
                     <tbody>
 
-                        {sortedStudents.length > 0 ? (
+                        {loading ? (
+
+                            <tr>
+                                <td colSpan="11" className="no-data">
+                                    Loading student data...
+                                </td>
+                            </tr>
+
+                        ) : error ? (
+
+                            <tr>
+                                <td colSpan="11" className="no-data">
+                                    {error}
+                                </td>
+                            </tr>
+
+                        ) : sortedStudents.length > 0 ? (
 
                             sortedStudents.map((item, index) => (
 
                                 <tr
                                     key={item.id}
-                                    className={`table-data ${item.total === highestMark
-                                            ? "topper-row"
-                                            : ""
+                                    className={`table-data ${item.total === highestMark ? "topper-row" : ""
                                         }`}
                                 >
                                     <td>{index + 1}</td>
-
                                     <td>
-                                        {item.name}
+                                        <span
+                                            className="student-name-link"
+                                            onClick={() => navigate(`/student/${item.id}`)}
+                                        >
+                                            {item.name}
+                                        </span>
+
                                         {item.total === highestMark && <span> 🏆</span>}
                                     </td>
 
@@ -96,17 +117,31 @@ function StudentTable({ students,handleDeleteStudent }) {
 
                                     <td>
                                         <div className={`student-result ${item.result.toLowerCase() === "pass"
-                                                ? "pass"
-                                                : "fail"
+                                            ? "pass"
+                                            : "fail"
                                             }`}>
                                             {item.result}
                                         </div>
                                     </td>
-                                    <td>
-                                        <span className="action-delete" onClick={()=>handleDeleteStudent(item.id)}>Delete</span>
-                                        <span className="action-edit">Edit</span>
-                                    </td>
 
+                                    <td>
+                                        <span
+                                            className="action-delete"
+                                            onClick={() => handleDeleteStudent(item.id)}
+                                        >
+                                            Delete
+                                        </span>
+
+                                        <span
+                                            className="action-edit"
+                                            onClick={() => {
+                                                handleEditStudent(item);
+                                                navigate("/add");
+                                            }}
+                                        >
+                                            Edit
+                                        </span>
+                                    </td>
                                 </tr>
 
                             ))
@@ -114,7 +149,7 @@ function StudentTable({ students,handleDeleteStudent }) {
                         ) : (
 
                             <tr>
-                                <td colSpan="10" className="no-data">
+                                <td colSpan="11" className="no-data">
                                     No Student Records Found
                                 </td>
                             </tr>

@@ -1,6 +1,11 @@
-import React, { useState } from "react";
-import './AddStudentForm.css';
-function AddStudentForm({ onAddStudent }) {
+import React, { useEffect, useState } from "react";
+import "./AddStudentForm.css";
+
+function AddStudentForm({
+    onAddStudent,
+    selectedStudent,
+    handleEditStudent
+}) {
     const [name, setName] = useState("");
     const [tamil, setTamil] = useState("");
     const [english, setEnglish] = useState("");
@@ -8,11 +13,28 @@ function AddStudentForm({ onAddStudent }) {
     const [science, setScience] = useState("");
     const [social, setSocial] = useState("");
 
-    function handleSubmit(e) {
+    useEffect(() => {
+        if (selectedStudent) {
+            setName(selectedStudent.name);
+            setTamil(selectedStudent.tamil);
+            setEnglish(selectedStudent.english);
+            setMaths(selectedStudent.maths);
+            setScience(selectedStudent.science);
+            setSocial(selectedStudent.social);
+        } else {
+            setName("");
+            setTamil("");
+            setEnglish("");
+            setMaths("");
+            setScience("");
+            setSocial("");
+        }
+    }, [selectedStudent]);
 
+    function handleSubmit(e) {
         e.preventDefault();
 
-        const newStudent = {
+        const student = {
             name: name.trim(),
             tamil: Number(tamil),
             english: Number(english),
@@ -21,21 +43,21 @@ function AddStudentForm({ onAddStudent }) {
             social: Number(social)
         };
 
-        onAddStudent(newStudent);
-        setName("");
-        setTamil("");
-        setEnglish("");
-        setMaths("");
-        setScience("");
-        setSocial("");
+        if (selectedStudent) {
+            handleEditStudent(student);
+        } else {
+            onAddStudent(student);
+        }
     }
 
+    return (
+        <div className="student-form-container">
 
-    return <div className="student-form-container">
-        <div className="add-student-form">Add Student</div>
-        <form onSubmit={handleSubmit}>
+            <div className="add-student-form">
+                {selectedStudent ? "Update Student" : "Add Student"}
+            </div>
 
-            <div >
+            <form onSubmit={handleSubmit}>
 
                 <input
                     className="form-input-group"
@@ -100,15 +122,14 @@ function AddStudentForm({ onAddStudent }) {
                     onChange={(e) => setSocial(e.target.value)}
                     required
                 />
+
                 <button type="submit" className="submit">
-                    Add Student
+                    {selectedStudent ? "Update Student" : "Add Student"}
                 </button>
 
-            </div>
-
-
-        </form>
-    </div>
-
+            </form>
+        </div>
+    );
 }
+
 export default AddStudentForm;
