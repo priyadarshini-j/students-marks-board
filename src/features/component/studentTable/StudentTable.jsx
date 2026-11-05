@@ -1,8 +1,18 @@
+
 import React, { useState } from "react";
 import "./StudentTable.css";
 import { useNavigate } from "react-router-dom";
+import useStudents from "../../../hooks/useStudents";
 
-function StudentTable({ students, handleDeleteStudent, handleEditStudent, loading, error }) {
+function StudentTable() {
+
+    const {
+        students,
+        loading,
+        error,
+        deleteStudent,
+        editStudent
+    } = useStudents();
 
     const [sortOrder, setSortOrder] = useState(false);
     const navigate = useNavigate();
@@ -18,20 +28,19 @@ function StudentTable({ students, handleDeleteStudent, handleEditStudent, loadin
     };
 
     const highestMark = students.length > 0
-        ? Math.max(...students.map((item) => item.total)) : 0;
-
+        ? Math.max(...students.map(item => Number(item.total) || 0))
+        : 0;
 
     return (
         <div className="student-table-container">
 
             <div className="student-table-header">
                 Student Marks
+
                 <button onClick={handleSort} className="sort-button">
                     {sortOrder ? "Sort Descending" : "Sort by Total"}
                 </button>
             </div>
-
-
 
             <div className="table-responsive">
 
@@ -56,31 +65,31 @@ function StudentTable({ students, handleDeleteStudent, handleEditStudent, loadin
                     <tbody>
 
                         {loading ? (
-
                             <tr>
                                 <td colSpan="11" className="no-data">
                                     Loading student data...
                                 </td>
                             </tr>
-
                         ) : error ? (
-
                             <tr>
                                 <td colSpan="11" className="no-data">
                                     {error}
                                 </td>
                             </tr>
-
                         ) : sortedStudents.length > 0 ? (
 
                             sortedStudents.map((item, index) => (
 
                                 <tr
                                     key={item.id}
-                                    className={`table-data ${item.total === highestMark ? "topper-row" : ""
-                                        }`}
+                                    className={`table-data ${
+                                        Number(item.total) === highestMark
+                                            ? "topper-row"
+                                            : ""
+                                    }`}
                                 >
                                     <td>{index + 1}</td>
+
                                     <td>
                                         <span
                                             className="student-name-link"
@@ -89,37 +98,23 @@ function StudentTable({ students, handleDeleteStudent, handleEditStudent, loadin
                                             {item.name}
                                         </span>
 
-                                        {item.total === highestMark && <span> 🏆</span>}
+                                        {Number(item.total) === highestMark && " 🏆"}
                                     </td>
 
-                                    <td className={item.tamil < 35 ? "fail-mark" : ""}>
-                                        {item.tamil}
-                                    </td>
-
-                                    <td className={item.english < 35 ? "fail-mark" : ""}>
-                                        {item.english}
-                                    </td>
-
-                                    <td className={item.maths < 35 ? "fail-mark" : ""}>
-                                        {item.maths}
-                                    </td>
-
-                                    <td className={item.science < 35 ? "fail-mark" : ""}>
-                                        {item.science}
-                                    </td>
-
-                                    <td className={item.social < 35 ? "fail-mark" : ""}>
-                                        {item.social}
-                                    </td>
+                                    <td className={item.tamil < 35 ? "fail-mark" : ""}>{item.tamil}</td>
+                                    <td className={item.english < 35 ? "fail-mark" : ""}>{item.english}</td>
+                                    <td className={item.maths < 35 ? "fail-mark" : ""}>{item.maths}</td>
+                                    <td className={item.science < 35 ? "fail-mark" : ""}>{item.science}</td>
+                                    <td className={item.social < 35 ? "fail-mark" : ""}>{item.social}</td>
 
                                     <td>{item.total}</td>
                                     <td>{item.percentage}%</td>
-
                                     <td>
-                                        <div className={`student-result ${item.result.toLowerCase() === "pass"
-                                            ? "pass"
-                                            : "fail"
-                                            }`}>
+                                        <div className={`student-result ${
+                                            item.result?.toLowerCase() === "pass"
+                                                ? "pass"
+                                                : "fail"
+                                        }`}>
                                             {item.result}
                                         </div>
                                     </td>
@@ -127,7 +122,7 @@ function StudentTable({ students, handleDeleteStudent, handleEditStudent, loadin
                                     <td>
                                         <span
                                             className="action-delete"
-                                            onClick={() => handleDeleteStudent(item.id)}
+                                            onClick={() => deleteStudent(item.id)}
                                         >
                                             Delete
                                         </span>
@@ -135,7 +130,7 @@ function StudentTable({ students, handleDeleteStudent, handleEditStudent, loadin
                                         <span
                                             className="action-edit"
                                             onClick={() => {
-                                                handleEditStudent(item);
+                                                editStudent(item);
                                                 navigate("/add");
                                             }}
                                         >
@@ -147,13 +142,11 @@ function StudentTable({ students, handleDeleteStudent, handleEditStudent, loadin
                             ))
 
                         ) : (
-
                             <tr>
                                 <td colSpan="11" className="no-data">
                                     No Student Records Found
                                 </td>
                             </tr>
-
                         )}
 
                     </tbody>
@@ -161,8 +154,8 @@ function StudentTable({ students, handleDeleteStudent, handleEditStudent, loadin
                 </table>
 
             </div>
-
         </div>
     );
 }
+
 export default StudentTable;

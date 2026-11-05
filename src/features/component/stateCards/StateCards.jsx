@@ -1,53 +1,45 @@
-import React from "react";
+
+import useStats from "../../../hooks/useStats";
+import useStudents from "../../../hooks/useStudents";
 import "./StateCards.css";
 
+function StateCards() {
 
-function StateCards({ students, handleAddStudent }) {
+    const { students } = useStudents();
 
-    // const students = Student.students;
-    const totalStudents = students.length;
-
-    const passedStudents = students.filter(
-        (item) => item.result.toLowerCase() === "pass"
-    ).length;
-
-    const failedStudents = students.filter(
-        (item) => item.result.toLowerCase() === "fail"
-    ).length;
-    const totalPercentage = students.reduce(
-        (sum, item) => sum + item.percentage, 0
-    );
-
-    const classAverage = students.length > 0
-        ? (totalPercentage / students.length).toFixed(2)
-        : "0.00";
-
-    const studentStats = [
-        { title: "Total Student", count: totalStudents },
-        { title: "Passed", count: passedStudents, color: "green" },
-        { title: "Failed", count: failedStudents, color: "red" },
-        { title: "Class Average", count: `${classAverage}%` }
-    ];
+    const {
+        total,
+        passed,
+        failed,
+        average
+    } = useStats(students);
 
     return (
         <div className="student-state-container">
 
-            {studentStats.map((item, id) => (
-                <div className="state-card" key={id}>
+            <div className="state-card">
+                <h3 className="state-card-fields">Total Students</h3>
+                <h2 className="student-card-count">{total}</h2>
+            </div>
 
-                    <div className="state-card-fields">
-                        {item.title}
-                    </div>
+            <div className="state-card">
+                <h3 className="state-card-fields">Passed</h3>
+                <h2 className="student-card-count" style={{ color: "green" }}>
+                    {passed}
+                </h2>
+            </div>
 
-                    <div
-                        className="student-card-count"
-                        style={{ color: item.color || "black" }}
-                    >
-                        {item.count}
-                    </div>
+            <div className="state-card">
+                <h3 className="state-card-fields">Failed</h3>
+                <h2 className="student-card-count" style={{ color: "red" }}>
+                    {failed}
+                </h2>
+            </div>
 
-                </div>
-            ))}
+            <div className="state-card">
+                <h3 className="state-card-fields">Average</h3>
+                <h2 className="student-card-count">{average}%</h2>
+            </div>
 
         </div>
     );

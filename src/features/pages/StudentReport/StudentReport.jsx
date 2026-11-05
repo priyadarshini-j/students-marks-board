@@ -1,157 +1,141 @@
-import React, { useEffect, useState } from "react";
+
+import React from "react";
 import { useParams } from "react-router-dom";
-import './StudentReport.css'
+
+import useStudents from "../../../hooks/useStudents";
+import useFetch from "../../../hooks/useFetch";
+
+import "./StudentReport.css";
 
 function StudentReport() {
 
     const { id } = useParams();
 
-    const [student, setStudent] = useState(null);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState("");
+    const { error: contextError } = useStudents();
 
-    useEffect(() => {
-
-        const fetchStudent = async () => {
-
-            try {
-                setLoading(true);
-                setError("");
-
-                const response = await fetch(
-                    `http://localhost:3001/students/${id}`
-                );
-
-                if (!response.ok) {
-                    throw new Error("Student not found");
-                }
-
-                const data = await response.json();
-
-                setStudent(data);
-
-            } catch (error) {
-
-                console.log("Student fetch error:", error);
-                setStudent(null);
-                setError(error.message);
-
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        fetchStudent();
-
-    }, [id]);
-
+    const {
+        data: student,
+        loading,
+        error
+    } = useFetch(`http://localhost:3001/students/${id}`);
 
     if (loading) {
-        return <h2>Loading report card...</h2>;
+        return <h2>Loading student report...</h2>;
     }
 
-    if (error || !student) {
+    if (error || contextError) {
+        return <p>{error || contextError}</p>;
+    }
+
+    if (!student) {
         return <h2>Student not found</h2>;
     }
+
     const subjects = [
-        { name: "Tamil", marks: Number(student.tamil) },
-        { name: "English", marks: Number(student.english) },
-        { name: "Maths", marks: Number(student.maths) },
-        { name: "Science", marks: Number(student.science) },
-        { name: "Social", marks: Number(student.social) }
+        { name: "Tamil", mark: Number(student.tamil) },
+        { name: "English", mark: Number(student.english) },
+        { name: "Maths", mark: Number(student.maths) },
+        { name: "Science", mark: Number(student.science) },
+        { name: "Social", mark: Number(student.social) }
     ];
 
-
-
     const total = subjects.reduce(
-        (sum, subject) => sum + subject.marks,
+        (sum, subject) => sum + subject.mark,
         0
     );
 
-
     const percentage = total / 5;
 
-
-    const failedSubjects = subjects.filter(
-        (subject) => subject.marks < 35
-    );
-
-
-    const result = failedSubjects.length === 0
+    const result = subjects.every(subject => subject.mark >= 35)
         ? "Pass"
         : "Fail";
 
+    const failedSubjects = subjects.filter(
+        subject => subject.mark < 35
+    );
 
     return (
+        <div className="student-report">
 
-        <div className="report-card">
+            <div className="report-header">
+                <h2>Government Higher Secondary School</h2>
+                <h3>STUDENT MARKS REPORT</h3>
+                <p>Quarterly Examination - 2026</p>
+            </div>
 
-            <h2>Student Report Card</h2>
+            <div className="student-details">
+                <p><strong>Student Name:</strong> {student.name}</p>
+                <p><strong>Student ID:</strong> {student.id}</p>
+                <p><strong>Class:</strong> 10</p>
+                <p><strong>Exam:</strong> Quarterly Exam</p>
+            </div>
 
-            <h3>Name: {student.name}</h3>
+            <h3 className="marks-title">Subject-wise Marks</h3>
 
             <table>
-
                 <thead>
                     <tr>
+                        <th>S.No</th>
                         <th>Subject</th>
-                        <th>Marks</th>
+                        <th>Maximum Marks</th>
+                        <th>Obtained Marks</th>
+                        <th>Result</th>
                     </tr>
                 </thead>
 
                 <tbody>
-
-                    {subjects.map((subject) => (
-
+                    {subjects.map((subject, index) => (
                         <tr key={subject.name}>
-
+                            <td>{index + 1}</td>
                             <td>{subject.name}</td>
-
-                            <td style={{
-                                color: subject.marks < 35 ? "red" : "black"
-                            }}>
-                                {subject.marks}
+                            <td>100</td>
+                            <td className={
+                                subject.mark < 35 ? "fail-mark" : ""
+                            }>
+                                {subject.mark}
                             </td>
-
+                            <td className={
+                                subject.mark >= 35 ? "pass-text" : "fail-text"
+                            }>
+                                {subject.mark >= 35 ? "Pass" : "Fail"}
+                            </td>
                         </tr>
-
                     ))}
-
                 </tbody>
-
             </table>
 
-            <h3>Total: {total} / 500</h3>
+            <div className="report-summary">
+                <h3>Performance Summary</h3>
 
-            <h3>Percentage: {percentage}%</h3>
+                <p><strong>Total Marks:</strong> {total} / 500</p>
+                <p><strong>Percentage:</strong> {percentage.toFixed(2)}%</p>
 
-            <h3>
-                Result: {result}
-            </h3>
+                <p>
+                    <strong>Overall Result:</strong>
+                    <span className={result === "Pass" ? "pass-text" : "fail-text"}>
+                        {" "}{result}
+                    </span>
+                </p>
+            </div>
 
             {failedSubjects.length > 0 && (
+                <div className="failed-subjects">
+                    <h3>Failed Subjects</h3>
 
-                <div style={{ color: "red" }}>
-
-                    <h3>Failed Subjects:</h3>
-
-                    {failedSubjects.map((subject) => (
-
+                    {failedSubjects.map(subject => (
                         <p key={subject.name}>
-                            {subject.name} - {subject.marks}
+                            {subject.name}: {subject.mark} marks
                         </p>
-
                     ))}
-
                 </div>
-
             )}
+
 
             <button
                 className="print-button"
                 onClick={() => window.print()}
             >
-                Print Report Card
+                Print Report
             </button>
 
         </div>

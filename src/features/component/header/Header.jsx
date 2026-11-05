@@ -27,12 +27,7 @@ function Header() {
                 <NavLink to="/add">
                     Add Student
                 </NavLink>
-                {/* <NavLink to="/student/:id">
-                    Student Record
-                </NavLink> */}
-                <NavLink to="*">
-                    NotFound
-                </NavLink>
+                
 
             </nav>
 

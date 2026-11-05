@@ -1,18 +1,18 @@
+
 import React, { useEffect, useState } from "react";
 import "./AddStudentForm.css";
 
-function AddStudentForm({
-    onAddStudent,
-    selectedStudent,
-    handleEditStudent
-}) {
+function AddStudentForm({ onSubmitStudent, selectedStudent }) {
+
     const [name, setName] = useState("");
     const [tamil, setTamil] = useState("");
     const [english, setEnglish] = useState("");
     const [maths, setMaths] = useState("");
     const [science, setScience] = useState("");
     const [social, setSocial] = useState("");
+
     useEffect(() => {
+
         if (selectedStudent) {
             setName(selectedStudent.name);
             setTamil(selectedStudent.tamil);
@@ -28,9 +28,11 @@ function AddStudentForm({
             setScience("");
             setSocial("");
         }
+
     }, [selectedStudent]);
 
-    function handleSubmit(e) {
+    async function handleSubmit(e) {
+
         e.preventDefault();
 
         const student = {
@@ -42,11 +44,7 @@ function AddStudentForm({
             social: Number(social)
         };
 
-        if (selectedStudent) {
-            handleEditStudent(student);
-        } else {
-            onAddStudent(student);
-        }
+        await onSubmitStudent(student);
     }
 
     return (

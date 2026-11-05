@@ -1,30 +1,26 @@
+
 import React from "react";
 import { useNavigate } from "react-router-dom";
-
-import AddStudentForm from "../../../features/component/addStudentForm/AddStudentForm";
 import './AddStudent.css';
 
-function AddStudent({
-    handleAddStudent,
-    selectedStudent,
-    handleEditStudent
-}) {
+import useStudents from "../../../hooks/useStudents";
+import AddStudentForm from "../../component/addStudentForm/AddStudentForm";
+
+function AddStudent() {
 
     const navigate = useNavigate();
 
+    const {
+        addStudent,
+        selectedStudent,
+        updateStudent
+    } = useStudents();
+
     const handleSubmit = async (student) => {
 
-        const success = await handleAddStudent(student);
-
-        if (success) {
-            navigate("/");
-        }
-    };
-
-    // Update student
-    const handleUpdate = async (student) => {
-
-        const success = await handleEditStudent(student);
+        const success = selectedStudent
+            ? await updateStudent(student)
+            : await addStudent(student);
 
         if (success) {
             navigate("/");
@@ -35,13 +31,14 @@ function AddStudent({
         <div className="student-board-container">
 
             <h2 className="new-student">
-                {selectedStudent ? "Update Student" : "Add New Student"}
+                {selectedStudent
+                    ? "Update Existing Student"
+                    : "Add New Student"}
             </h2>
 
             <AddStudentForm
-                onAddStudent={handleSubmit}
+                onSubmitStudent={handleSubmit}
                 selectedStudent={selectedStudent}
-                handleEditStudent={handleUpdate}
             />
 
         </div>
