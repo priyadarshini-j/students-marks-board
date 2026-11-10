@@ -1,19 +1,7 @@
 {
   "students": [
     {
-      "name": "priya",
-      "tamil": 60,
-      "english": 78,
-      "maths": 78,
-      "science": 89,
-      "social": 79,
-      "total": 384,
-      "percentage": 76.8,
-      "result": "Pass",
-      "id": "r9e6J0FIhhI"
-    },
-    {
-      "name": "Sara",
+      "name": "Priyadharshini J",
       "tamil": 90,
       "english": 90,
       "maths": 90,
@@ -22,19 +10,55 @@
       "total": 450,
       "percentage": 90,
       "result": "Pass",
-      "id": "qLseHLtZM20"
+      "id": "-SAf-2-KBDk"
     },
     {
-      "name": "jai",
-      "tamil": 7,
-      "english": 7,
-      "maths": 7,
-      "science": 7,
-      "social": 7,
-      "total": 35,
-      "percentage": 7,
+      "name": "Jaya",
+      "tamil": 80,
+      "english": 68,
+      "maths": 67,
+      "science": 67,
+      "social": 57,
+      "total": 339,
+      "percentage": 67.8,
+      "result": "Pass",
+      "id": "igkGoAYbdEY"
+    },
+    {
+      "name": "Ashi",
+      "tamil": 32,
+      "english": 32,
+      "maths": 23,
+      "science": 78,
+      "social": 90,
+      "total": 255,
+      "percentage": 51,
       "result": "Fail",
-      "id": "pmEh5mfWutY"
+      "id": "udYPzw9X030"
+    },
+    {
+      "name": "bavan",
+      "tamil": 98,
+      "english": 97,
+      "maths": 89,
+      "science": 78,
+      "social": 89,
+      "total": 451,
+      "percentage": 90.2,
+      "result": "Pass",
+      "id": "lwizRLql8mA"
+    },
+    {
+      "name": "Sara",
+      "tamil": 80,
+      "english": 65,
+      "maths": 90,
+      "science": 67,
+      "social": 69,
+      "total": 371,
+      "percentage": 74.2,
+      "result": "Pass",
+      "id": "6_9n8Qi5wD4"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"

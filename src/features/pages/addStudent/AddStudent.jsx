@@ -30,7 +30,7 @@ function AddStudent() {
     return (
         <div className="student-board-container">
 
-            <h2 className="new-student">
+            <h2 className="flex mt-5 mr-[300px] -mb-5 ml-[350px] font-bold text-2xl">
                 {selectedStudent
                     ? "Update Existing Student"
                     : "Add New Student"}

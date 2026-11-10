@@ -10,7 +10,7 @@ function Home() {
     const { topper } = useStats(students);
 
     return (
-        <div className="home-container">
+        <div className="min-h-screen bg-[#f5f7fb] p-[30px] font-['Poppins',sans-serif]">
 
             <StateCards />
 

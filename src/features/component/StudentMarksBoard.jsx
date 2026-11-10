@@ -7,7 +7,7 @@ import StudentTable from "./studentTable/StudentTable";
 function StudentMarksBoard({ students, handleAddStudent ,handleDeleteStudent,handleEditStudent,loading,error,selectedStudent,}) {
     
 
-    return<div className="student-board-container">
+    return<div className="mb-[30px]">
         <StateCards students={students} />
         {/* <AddStudentForm onAddStudent={handleAddStudent} handleEditStudent={handleEditStudent} selectedStudent={selectedStudent}/> */}
         <StudentTable students={students} handleDeleteStudent={handleDeleteStudent} handleEditStudent={handleEditStudent}

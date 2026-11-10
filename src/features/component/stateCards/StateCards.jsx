@@ -1,46 +1,34 @@
-
 import useStats from "../../../hooks/useStats";
 import useStudents from "../../../hooks/useStudents";
-import "./StateCards.css";
 
 function StateCards() {
-
     const { students } = useStudents();
 
-    const {
-        total,
-        passed,
-        failed,
-        average
-    } = useStats(students);
+    const { total, passed, failed, average } = useStats(students);
+
+    const cards = [
+        { title: "Total Students", value: total, color: "text-gray-900" },
+        { title: "Passed", value: passed, color: "text-green-600" },
+        { title: "Failed", value: failed, color: "text-red-600" },
+        { title: "Average", value: `${average}%`, color: "text-gray-900" },
+    ];
 
     return (
-        <div className="student-state-container">
+        <div className="mx-auto my-6 grid w-full max-w-6xl grid-cols-1 gap-9  px-4 sm:grid-cols-2 sm:gap-5 sm:px-6 lg:grid-cols-4 lg:my-12">
+            {cards.map((card) => (
+                <div
+                    key={card.title}
+                    className="flex min-h-[90px] flex-col justify-center rounded-[15px] border border-[#acabab] bg-white px-5 py-3"
+                >
+                    <h3 className="text-base font-medium text-[#353434] sm:text-lg lg:text-[20px]">
+                        {card.title}
+                    </h3>
 
-            <div className="state-card">
-                <h3 className="state-card-fields">Total Students</h3>
-                <h2 className="student-card-count">{total}</h2>
-            </div>
-
-            <div className="state-card">
-                <h3 className="state-card-fields">Passed</h3>
-                <h2 className="student-card-count" style={{ color: "green" }}>
-                    {passed}
-                </h2>
-            </div>
-
-            <div className="state-card">
-                <h3 className="state-card-fields">Failed</h3>
-                <h2 className="student-card-count" style={{ color: "red" }}>
-                    {failed}
-                </h2>
-            </div>
-
-            <div className="state-card">
-                <h3 className="state-card-fields">Average</h3>
-                <h2 className="student-card-count">{average}%</h2>
-            </div>
-
+                    <h2 className={`text-2xl font-extrabold ${card.color}`}>
+                        {card.value}
+                    </h2>
+                </div>
+            ))}
         </div>
     );
 }
