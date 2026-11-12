@@ -1,29 +1,23 @@
-
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import './AddStudent.css';
 
-import useStudents from "../../../hooks/useStudents";
+import { addStudent } from "../../students/studentsSlice";
 import AddStudentForm from "../../component/addStudentForm/AddStudentForm";
 
 function AddStudent() {
 
     const navigate = useNavigate();
-
-    const {
-        addStudent,
-        selectedStudent,
-        updateStudent
-    } = useStudents();
+    const dispatch = useDispatch();
 
     const handleSubmit = async (student) => {
-
-        const success = selectedStudent
-            ? await updateStudent(student)
-            : await addStudent(student);
-
-        if (success) {
+        try {
+            await dispatch(addStudent(student)).unwrap();
             navigate("/");
+            return true;
+        } catch {
+            return false;
         }
     };
 
@@ -31,14 +25,12 @@ function AddStudent() {
         <div className="student-board-container">
 
             <h2 className="flex mt-5 mr-[300px] -mb-5 ml-[350px] font-bold text-2xl">
-                {selectedStudent
-                    ? "Update Existing Student"
-                    : "Add New Student"}
+                Add New Student
             </h2>
 
             <AddStudentForm
                 onSubmitStudent={handleSubmit}
-                selectedStudent={selectedStudent}
+                selectedStudent={null}
             />
 
         </div>

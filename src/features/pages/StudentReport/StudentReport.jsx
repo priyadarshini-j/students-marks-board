@@ -1,8 +1,13 @@
 import React from "react";
 import { useParams } from "react-router-dom";
 
-import useStudents from "../../../hooks/useStudents";
-import useFetch from "../../../hooks/useFetch";
+import { useSelector } from "react-redux";
+
+import {
+    selectStudentById,
+    selectStudentsStatus,
+    selectStudentsError
+} from "../../students/studentsSlice";
 
 
 const th =
@@ -15,20 +20,16 @@ const failText = "font-bold text-[#dc2626]";
 function StudentReport() {
     const { id } = useParams();
 
-    const { error: contextError } = useStudents();
+    const student = useSelector((state) => selectStudentById(state, id));
+    const status = useSelector(selectStudentsStatus);
+    const error = useSelector(selectStudentsError);
 
-    const {
-        data: student,
-        loading,
-        error
-    } = useFetch(`http://localhost:3001/students/${id}`);
-
-    if (loading) {
+    if (status === "idle" || status === "loading") {
         return <h2>Loading student report...</h2>;
     }
 
-    if (error || contextError) {
-        return <p>{error || contextError}</p>;
+    if (status === "failed") {
+        return <p>{error}</p>;
     }
 
     if (!student) {

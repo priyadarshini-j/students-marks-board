@@ -1,26 +1,38 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import useStudents from "../../../hooks/useStudents";
+import { useDispatch, useSelector } from "react-redux";
+import {
+    deleteStudent,
+    selectStudentsSortedByTotal,
+    selectStudentsStatus,
+    selectStudentsError,
+    selectTopper
+} from "../../students/studentsSlice";
 
 const cell = "px-[15px] py-3 text-center max-[480px]:p-2 max-[480px]:text-xs";
 const noData = `${cell} text-center`;
 
 function StudentTable() {
-    const { students, loading, error, deleteStudent, editStudent } = useStudents();
-
-    const [sortOrder, setSortOrder] = useState(false);
+    const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const sortedStudents = [...students].sort((a, b) =>
-        sortOrder ? a.total - b.total : b.total - a.total
-    );
+    const studentsDesc = useSelector(selectStudentsSortedByTotal);
+    const status = useSelector(selectStudentsStatus);
+    const error = useSelector(selectStudentsError);
+    const topper = useSelector(selectTopper);
+
+    const loading = status === "idle" || status === "loading";
+    const failed = status === "failed";
+
+    const [sortOrder, setSortOrder] = useState(false);
+
+    const sortedStudents = sortOrder
+        ? [...studentsDesc].reverse()
+        : studentsDesc;
 
     const handleSort = () => setSortOrder(!sortOrder);
 
-    const highestMark =
-        students.length > 0
-            ? Math.max(...students.map((item) => Number(item.total) || 0))
-            : 0;
+    const highestMark = topper ? Number(topper.total) || 0 : 0;
 
     const markClass = (mark) =>
         `${cell} ${mark < 35 ? "text-[red] font-semibold" : ""}`;
@@ -59,7 +71,7 @@ function StudentTable() {
                                     Loading student data...
                                 </td>
                             </tr>
-                        ) : error ? (
+                        ) : failed ? (
                             <tr>
                                 <td colSpan="11" className={noData}>
                                     {error}
@@ -112,17 +124,14 @@ function StudentTable() {
                                         <td className={cell}>
                                             <span
                                                 className="mr-2.5 cursor-pointer rounded-[5px] bg-[rgb(175,2,2)] p-[5px] text-sm text-[#faf6f6]"
-                                                onClick={() => deleteStudent(item.id)}
+                                                onClick={() => dispatch(deleteStudent(item.id))}
                                             >
                                                 Delete
                                             </span>
 
                                             <span
                                                 className="ml-2.5 cursor-pointer rounded-[5px] bg-[#14532d] p-[5px] pr-2.5 text-sm text-white"
-                                                onClick={() => {
-                                                    editStudent(item);
-                                                    navigate("/add");
-                                                }}
+                                                onClick={() => navigate(`/edit/${item.id}`)}
                                             >
                                                 Edit
                                             </span>

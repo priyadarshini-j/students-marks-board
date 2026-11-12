@@ -10,11 +10,13 @@ function NotFound() {
 
             <h2 className="text-[1.5em] font-bold">Page Not Found</h2>
 
-            <p>The page you are looking for does not exist.</p>
+            <p className="text-[1.0em]">
+                The page you are looking for does not exist.
+            </p>
 
             <button
                 onClick={() => navigate("/")}
-                className="cursor-pointer border-none bg-[#1F4D3A] p-2.5 text-white outline-none"
+                className="cursor-pointer border-none bg-[#1F4D3A] p-2.5 text-white outline-none rounded-md mt-5"
             >
                 Go to Home
             </button>

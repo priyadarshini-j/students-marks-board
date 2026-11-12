@@ -1,10 +1,8 @@
-import useStats from "../../../hooks/useStats";
-import useStudents from "../../../hooks/useStudents";
+import { useSelector } from "react-redux";
+import { selectStudentStats } from "../../students/studentsSlice";
 
 function StateCards() {
-    const { students } = useStudents();
-
-    const { total, passed, failed, average } = useStats(students);
+    const { total, passed, failed, average } = useSelector(selectStudentStats);
 
     const cards = [
         { title: "Total Students", value: total, color: "text-gray-900" },
