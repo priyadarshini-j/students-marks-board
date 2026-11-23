@@ -1,4 +1,3 @@
-import React from "react";
 import StateCards from "../../component/stateCards/StateCards";
 import StudentTable from "../../component/studentTable/StudentTable";
 import "./Home.css";

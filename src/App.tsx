@@ -1,18 +1,18 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useAppDispatch } from "./hooks/redux";
 import "./App.css";
 
 import Header from "./features/component/header/Header";
-import Home from "./features/pages/Home/Home.jsx";
-import StudentReport from "./features/pages/StudentReport/StudentReport.jsx";
-import NotFound from "./features/pages/NotFound/NotFound.jsx";
-import AddStudent from "./features/pages/addStudent/AddStudent.jsx";
-import EditStudent from "./features/pages/editStudent/EditStudent.jsx";
+import Home from "./features/pages/Home/Home";
+import StudentReport from "./features/pages/StudentReport/StudentReport";
+import NotFound from "./features/pages/NotFound/NotFound";
+import AddStudent from "./features/pages/addStudent/AddStudent";
+import EditStudent from "./features/pages/editStudent/EditStudent";
 import { fetchStudents } from "./features/students/studentsSlice";
 
 function App() {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     useEffect(() => {
         dispatch(fetchStudents());

@@ -1,4 +1,4 @@
-const addStudentData = async (newStudent) => {
+const addStudentData = async (newStudent: Record<string, unknown>) => {
     try {
         const response = await fetch("http://localhost:3001/students", {
             method: "POST",

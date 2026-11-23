@@ -1,7 +1,6 @@
-import React from "react";
 import { useParams } from "react-router-dom";
 
-import { useSelector } from "react-redux";
+import { useAppSelector } from "../../../hooks/redux";
 
 import {
     selectStudentById,
@@ -18,11 +17,11 @@ const passText = "font-bold text-[#15803d]";
 const failText = "font-bold text-[#dc2626]";
 
 function StudentReport() {
-    const { id } = useParams();
+    const { id } = useParams<{ id: string }>();
 
-    const student = useSelector((state) => selectStudentById(state, id));
-    const status = useSelector(selectStudentsStatus);
-    const error = useSelector(selectStudentsError);
+    const student = useAppSelector((state) => selectStudentById(state, id));
+    const status = useAppSelector(selectStudentsStatus);
+    const error = useAppSelector(selectStudentsError);
 
     if (status === "idle" || status === "loading") {
         return <h2>Loading student report...</h2>;

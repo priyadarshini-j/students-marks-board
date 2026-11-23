@@ -1,7 +1,6 @@
-import React from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import '../addStudent/AddStudent.css';
+import { useAppDispatch, useAppSelector } from "../../../hooks/redux";
+import "../addStudent/AddStudent.css";
 
 import {
     updateStudent,
@@ -10,18 +9,19 @@ import {
     selectStudentsError
 } from "../../students/studentsSlice";
 import AddStudentForm from "../../component/addStudentForm/AddStudentForm";
+import type { StudentInput } from "../../students/types";
 
 function EditStudent() {
 
     const { id } = useParams();
     const navigate = useNavigate();
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
-    const student = useSelector((state) => selectStudentById(state, id));
-    const status = useSelector(selectStudentsStatus);
-    const error = useSelector(selectStudentsError);
+    const student = useAppSelector((state) => selectStudentById(state, id));
+    const status = useAppSelector(selectStudentsStatus);
+    const error = useAppSelector(selectStudentsError);
 
-    const handleSubmit = async (updated) => {
+    const handleSubmit = async (updated: StudentInput) => {
         try {
             await dispatch(updateStudent({ id, student: updated })).unwrap();
             navigate("/");

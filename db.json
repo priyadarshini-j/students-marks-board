@@ -1,18 +1,6 @@
 {
   "students": [
     {
-      "name": "Priyadharshini J",
-      "tamil": 94,
-      "english": 85,
-      "maths": 88,
-      "science": 90,
-      "social": 80,
-      "total": 437,
-      "percentage": 87.4,
-      "result": "Pass",
-      "id": "-SAf-2-KBDk"
-    },
-    {
       "name": "bavan",
       "tamil": 98,
       "english": 97,
@@ -25,16 +13,28 @@
       "id": "lwizRLql8mA"
     },
     {
-      "name": "Saravanan",
-      "tamil": 34,
-      "english": 68,
-      "maths": 90,
-      "science": 95,
+      "name": "Ashi",
+      "tamil": 78,
+      "english": 33,
+      "maths": 89,
+      "science": 90,
       "social": 90,
-      "total": 377,
-      "percentage": 75.4,
+      "total": 380,
+      "percentage": 76,
       "result": "Fail",
-      "id": "OT2Gi5UqZSM"
+      "id": "DAF9Dn0u_NQ"
+    },
+    {
+      "name": "priyadharshini",
+      "tamil": 79,
+      "english": 98,
+      "maths": 98,
+      "science": 87,
+      "social": 98,
+      "total": 460,
+      "percentage": 92,
+      "result": "Pass",
+      "id": "yac5C5dHzHg"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"

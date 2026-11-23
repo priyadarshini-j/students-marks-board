@@ -1,5 +1,5 @@
 
-const getStudentData = async () => {
+const getStudentData = async (): Promise<unknown[]> => {
     try {
         const response = await fetch("http://localhost:3001/students", {
             method: "GET",

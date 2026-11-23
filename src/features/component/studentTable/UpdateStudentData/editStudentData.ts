@@ -1,4 +1,4 @@
-async function editStudentData(id, student) {
+async function editStudentData(id: string | number, student: Record<string, unknown>) {
 
     const response = await fetch(
         `http://localhost:3001/students/${id}`,

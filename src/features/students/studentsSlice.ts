@@ -3,11 +3,30 @@ import {
     createSelector,
     createSlice
 } from "@reduxjs/toolkit";
+import type { Student, StudentInput } from "./types";
 
 const API_URL = "http://localhost:3001/students";
 
+type StudentStatus = "idle" | "loading" | "succeeded" | "failed";
 
-export const calculateStudent = (student) => {
+interface StudentsState {
+    items: Student[];
+    status: StudentStatus;
+    error: string | undefined;
+}
+
+interface StudentsRootState {
+    students: StudentsState;
+}
+
+interface UpdateStudentInput {
+    id: string | undefined;
+    student: StudentInput;
+}
+
+export const calculateStudent = <T extends StudentInput>(
+    student: T
+): T & Pick<Student, "total" | "percentage" | "result"> => {
 
     const marks = [
         Number(student.tamil),
@@ -29,21 +48,21 @@ export const calculateStudent = (student) => {
 };
 
 // GET all students
-export const fetchStudents = createAsyncThunk(
+export const fetchStudents = createAsyncThunk<Student[], void>(
     "students/fetchStudents",
     async () => {
 
         const [data] = await Promise.all([
 
-            fetch(API_URL).then(response => {
+            fetch(API_URL).then(async response => {
                 if (!response.ok) {
                     throw new Error("Failed to fetch students");
                 }
-                return response.json();
+                return await response.json() as Student[];
             }),
 
             // same 2 second loading delay you had before
-            new Promise(resolve => setTimeout(resolve, 2000))
+            new Promise<void>(resolve => setTimeout(resolve, 2000))
         ]);
 
         return data.map(student => calculateStudent(student));
@@ -51,7 +70,7 @@ export const fetchStudents = createAsyncThunk(
 );
 
 // POST a new student
-export const addStudent = createAsyncThunk(
+export const addStudent = createAsyncThunk<Student, StudentInput>(
     "students/addStudent",
     async (student) => {
 
@@ -67,12 +86,12 @@ export const addStudent = createAsyncThunk(
             throw new Error("Failed to add student");
         }
 
-        return await response.json();
+        return await response.json() as Student;
     }
 );
 
 // PUT (update) a student.
-export const updateStudent = createAsyncThunk(
+export const updateStudent = createAsyncThunk<Student, UpdateStudentInput>(
     "students/updateStudent",
     async ({ id, student }) => {
 
@@ -88,12 +107,12 @@ export const updateStudent = createAsyncThunk(
             throw new Error("Failed to update student");
         }
 
-        return await response.json();
+        return await response.json() as Student;
     }
 );
 
 // DELETE a student. Returns the id so the reducer can remove it.
-export const deleteStudent = createAsyncThunk(
+export const deleteStudent = createAsyncThunk<string | number, string | number>(
     "students/deleteStudent",
     async (id) => {
 
@@ -109,10 +128,10 @@ export const deleteStudent = createAsyncThunk(
     }
 );
 
-const initialState = {
-    items: [],        
-    status: "idle",   
-    error: ""         
+const initialState: StudentsState = {
+    items: [],
+    status: "idle",
+    error: ""
 };
 
 const studentsSlice = createSlice({
@@ -182,12 +201,12 @@ const studentsSlice = createSlice({
 
 export default studentsSlice.reducer;
 
-export const selectAllStudents = (state) => state.students.items;
-export const selectStudentsStatus = (state) => state.students.status;
-export const selectStudentsError = (state) => state.students.error;
+export const selectAllStudents = (state: StudentsRootState) => state.students.items;
+export const selectStudentsStatus = (state: StudentsRootState) => state.students.status;
+export const selectStudentsError = (state: StudentsRootState) => state.students.error;
 
 
-export const selectStudentById = (state, id) =>
+export const selectStudentById = (state: StudentsRootState, id: string | undefined) =>
     state.students.items.find(student => String(student.id) === String(id));
 
 export const selectStudentStats = createSelector(
@@ -212,7 +231,7 @@ export const selectStudentStats = createSelector(
     }
 );
 
-export const selectTopper = (state) => {
+export const selectTopper = (state: StudentsRootState): Student | null => {
 
     const students = state.students.items;
 

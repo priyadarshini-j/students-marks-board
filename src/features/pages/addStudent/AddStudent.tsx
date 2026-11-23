@@ -1,17 +1,17 @@
-import React from "react";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import './AddStudent.css';
+import { useAppDispatch } from "../../../hooks/redux";
+import "./AddStudent.css";
 
 import { addStudent } from "../../students/studentsSlice";
 import AddStudentForm from "../../component/addStudentForm/AddStudentForm";
+import type { StudentInput } from "../../students/types";
 
 function AddStudent() {
 
     const navigate = useNavigate();
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
-    const handleSubmit = async (student) => {
+    const handleSubmit = async (student: StudentInput) => {
         try {
             await dispatch(addStudent(student)).unwrap();
             navigate("/");

@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 
-function useFetch(url) {
+function useFetch(url: string) {
 
-    const [data, setData] = useState(null);
+    const [data, setData] = useState<unknown>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
 
@@ -31,7 +31,7 @@ function useFetch(url) {
             } catch (err) {
 
                 if (isMounted) {
-                    setError(err.message);
+                    setError(err instanceof Error ? err.message : String(err));
                 }
 
             } finally {

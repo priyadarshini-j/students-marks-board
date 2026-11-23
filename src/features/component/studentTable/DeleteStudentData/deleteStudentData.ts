@@ -1,5 +1,5 @@
 
-const deleteStudentData = async (id) => {
+const deleteStudentData = async (id: string | number) => {
     try {
         const response = await fetch(
             `http://localhost:3001/students/${id}`,

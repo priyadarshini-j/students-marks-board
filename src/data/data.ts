@@ -1,4 +1,6 @@
-const studentsData = [
+import type { Student } from "../features/students/types";
+
+const studentsData: Student[] = [
     {
         id: 1,
         sno: 1,
