@@ -46,9 +46,7 @@ function EditStudent() {
     return (
         <div className="student-board-container">
 
-            <h2 className="flex mt-5 mr-[300px] -mb-5 ml-[350px] font-bold text-2xl">
-                Update Existing Student
-            </h2>
+            
 
             <AddStudentForm
                 onSubmitStudent={handleSubmit}
