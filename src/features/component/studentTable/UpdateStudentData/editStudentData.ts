@@ -1,7 +1,9 @@
+import API_URL from "../../../../api";
+
 async function editStudentData(id: string | number, student: Record<string, unknown>) {
 
     const response = await fetch(
-        `http://localhost:3001/students/${id}`,
+        `${API_URL}/${id}`,
         {
             method: "PUT",
             headers: {

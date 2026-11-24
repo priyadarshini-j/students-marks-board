@@ -1,6 +1,5 @@
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch } from "../../../hooks/redux";
-import "./AddStudent.css";
 
 import { addStudent } from "../../students/studentsSlice";
 import AddStudentForm from "../../component/addStudentForm/AddStudentForm";

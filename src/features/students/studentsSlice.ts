@@ -4,8 +4,7 @@ import {
     createSlice
 } from "@reduxjs/toolkit";
 import type { Student, StudentInput } from "./types";
-
-const API_URL = "http://localhost:3001/students";
+import API_URL from "../../api";
 
 type StudentStatus = "idle" | "loading" | "succeeded" | "failed";
 
@@ -47,7 +46,6 @@ export const calculateStudent = <T extends StudentInput>(
     return { ...student, total, percentage, result };
 };
 
-// GET all students
 export const fetchStudents = createAsyncThunk<Student[], void>(
     "students/fetchStudents",
     async () => {
@@ -61,7 +59,7 @@ export const fetchStudents = createAsyncThunk<Student[], void>(
                 return await response.json() as Student[];
             }),
 
-            // same 2 second loading delay you had before
+         
             new Promise<void>(resolve => setTimeout(resolve, 2000))
         ]);
 
@@ -69,7 +67,7 @@ export const fetchStudents = createAsyncThunk<Student[], void>(
     }
 );
 
-// POST a new student
+
 export const addStudent = createAsyncThunk<Student, StudentInput>(
     "students/addStudent",
     async (student) => {
@@ -90,7 +88,7 @@ export const addStudent = createAsyncThunk<Student, StudentInput>(
     }
 );
 
-// PUT (update) a student.
+
 export const updateStudent = createAsyncThunk<Student, UpdateStudentInput>(
     "students/updateStudent",
     async ({ id, student }) => {
@@ -111,7 +109,7 @@ export const updateStudent = createAsyncThunk<Student, UpdateStudentInput>(
     }
 );
 
-// DELETE a student. Returns the id so the reducer can remove it.
+
 export const deleteStudent = createAsyncThunk<string | number, string | number>(
     "students/deleteStudent",
     async (id) => {
@@ -142,7 +140,7 @@ const studentsSlice = createSlice({
     extraReducers: (builder) => {
         builder
 
-            // ----- fetchStudents -----
+          
             .addCase(fetchStudents.pending, (state) => {
                 state.status = "loading";
                 state.error = "";
@@ -156,7 +154,7 @@ const studentsSlice = createSlice({
                 state.error = action.error.message;
             })
 
-            // ----- addStudent -----
+           
             .addCase(addStudent.pending, (state) => {
                 state.error = "";
             })
@@ -168,7 +166,7 @@ const studentsSlice = createSlice({
                 state.error = action.error.message;
             })
 
-            // ----- updateStudent -----
+          
             .addCase(updateStudent.pending, (state) => {
                 state.error = "";
             })
@@ -184,7 +182,7 @@ const studentsSlice = createSlice({
                 state.error = action.error.message;
             })
 
-            // ----- deleteStudent -----
+          
             .addCase(deleteStudent.pending, (state) => {
                 state.error = "";
             })

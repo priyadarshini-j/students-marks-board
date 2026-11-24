@@ -1,6 +1,8 @@
+import API_URL from "../../../../api";
+
 const addStudentData = async (newStudent: Record<string, unknown>) => {
     try {
-        const response = await fetch("http://localhost:3001/students", {
+        const response = await fetch(API_URL, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"

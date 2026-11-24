@@ -1,6 +1,6 @@
 import { useNavigate, useParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../../hooks/redux";
-import "../addStudent/AddStudent.css";
+
 
 import {
     updateStudent,

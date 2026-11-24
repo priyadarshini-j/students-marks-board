@@ -1,5 +1,4 @@
 import StateCards from "./stateCards/StateCards";
-import "./StudentMarksBoard.css";
 import StudentTable from "./studentTable/StudentTable";
 
 function StudentMarksBoard() {

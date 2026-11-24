@@ -1,8 +1,10 @@
 
+import API_URL from "../../../../api";
+
 const deleteStudentData = async (id: string | number) => {
     try {
         const response = await fetch(
-            `http://localhost:3001/students/${id}`,
+            `${API_URL}/${id}`,
             {
                 method: "DELETE"
             }

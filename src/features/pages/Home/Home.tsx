@@ -1,6 +1,6 @@
 import StateCards from "../../component/stateCards/StateCards";
 import StudentTable from "../../component/studentTable/StudentTable";
-import "./Home.css";
+
 
 function Home() {
     return (
@@ -8,7 +8,6 @@ function Home() {
 
             <StateCards />
 
-            {/* Topper card: use `const topper = useSelector(selectTopper)` from studentsSlice */}
 
             <StudentTable />
 

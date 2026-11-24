@@ -13,18 +13,6 @@
       "id": "lwizRLql8mA"
     },
     {
-      "name": "Ashi",
-      "tamil": 78,
-      "english": 33,
-      "maths": 89,
-      "science": 90,
-      "social": 90,
-      "total": 380,
-      "percentage": 76,
-      "result": "Fail",
-      "id": "DAF9Dn0u_NQ"
-    },
-    {
       "name": "priyadharshini",
       "tamil": 79,
       "english": 98,
@@ -35,6 +23,18 @@
       "percentage": 92,
       "result": "Pass",
       "id": "yac5C5dHzHg"
+    },
+    {
+      "name": "Saravanan",
+      "tamil": 80,
+      "english": 65,
+      "maths": 90,
+      "science": 90,
+      "social": 6,
+      "total": 331,
+      "percentage": 66.2,
+      "result": "Fail",
+      "id": "EaOU0dBJ7gM"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"

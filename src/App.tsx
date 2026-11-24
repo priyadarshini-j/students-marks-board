@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 import { useAppDispatch } from "./hooks/redux";
-import "./App.css";
+// import "./App.css";
 
 import Header from "./features/component/header/Header";
 import Home from "./features/pages/Home/Home";
