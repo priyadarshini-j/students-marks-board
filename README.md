@@ -106,6 +106,10 @@ students-marks-board/
 │   ├── index.css
 │   ├── main.tsx
 │   └── vite-env.d.ts
+├── src/screenshots/
+│   ├── dashboard-desktop.png
+│   ├── dashboard-mobile.png
+│   └── student-report-card.png
 ├── .env.example
 ├── .gitignore
 ├── db.json
@@ -283,19 +287,17 @@ The Redux thunks append `total`, `percentage`, and `result` before POST and PUT 
 
 ## Application Screenshots
 
-Application screenshot files are not currently included in the repository.
-
 ### Dashboard - Desktop
 
-![Dashboard - Desktop Placeholder](screenshots/dashboard-desktop.png)
+![Dashboard - Desktop](./src/screenshots/dashboard-desktop.png)
 
 ### Dashboard - Mobile
 
-![Dashboard - Mobile Placeholder](screenshots/dashboard-mobile.png)
+<img src="./src/screenshots/dashboard-mobile.png" alt="Dashboard - Mobile" width="320">
 
 ### Student Report Card
 
-![Student Report Card Placeholder](screenshots/student-report-card.png)
+![Student Report Card](./src/screenshots/student-report-card.png)
 
 ## Project Development Journey
 
