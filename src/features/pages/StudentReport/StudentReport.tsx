@@ -1,6 +1,7 @@
 import { useParams } from "react-router-dom";
 
 import { useAppSelector } from "../../../hooks/redux";
+import NotFound from "../NotFound/NotFound";
 
 import {
     selectStudentById,
@@ -32,7 +33,7 @@ function StudentReport() {
     }
 
     if (!student) {
-        return <h2>Student not found</h2>;
+        return <NotFound />;
     }
 
     const subjects = [

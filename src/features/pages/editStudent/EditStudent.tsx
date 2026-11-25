@@ -10,6 +10,7 @@ import {
 } from "../../students/studentsSlice";
 import AddStudentForm from "../../component/addStudentForm/AddStudentForm";
 import type { StudentInput } from "../../students/types";
+import NotFound from "../NotFound/NotFound";
 
 function EditStudent() {
 
@@ -40,7 +41,7 @@ function EditStudent() {
     }
 
     if (!student) {
-        return <h2>Student not found</h2>;
+        return <NotFound />;
     }
 
     return (
