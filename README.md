@@ -49,8 +49,6 @@ The application is built with React and TypeScript, uses Redux Toolkit for share
 | Package management | npm |
 | Version control | Git and GitHub |
 
-The repository does not currently contain Vercel, Render, Netlify, Docker, or backend deployment configuration.
-
 ## Project Folder Structure
 
 ```text
