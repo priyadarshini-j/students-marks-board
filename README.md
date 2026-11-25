@@ -14,7 +14,7 @@ The application is built with React and TypeScript, uses Redux Toolkit for share
 
 ## Live Application Link
 
-No live application URL is currently documented or included in the repository.
+[Open the Student Marks Board](https://students-marks-bwil.onrender.com)
 
 ## Key Features
 
@@ -372,7 +372,7 @@ No license file is currently included in this repository. Reuse, distribution, a
 
 ## Deployment Information
 
-No live frontend URL, backend URL, Vercel configuration, Render configuration, or deployment workflow is present in the verified project files.
+The frontend is deployed on Render: [https://students-marks-bwil.onrender.com](https://students-marks-bwil.onrender.com).
 
 - **Frontend build command:** `npm run build`
 - **Frontend output directory:** `dist/`
@@ -380,4 +380,3 @@ No live frontend URL, backend URL, Vercel configuration, Render configuration, o
 - **Router:** React Router uses `BrowserRouter`
 - **Client-side route fallback:** A deployment platform should route unknown application paths such as `/student/:id`, `/add`, and `/edit/:id` back to `index.html`
 - **Backend:** JSON Server must be hosted separately if the deployed frontend uses a remote API
-- **Render/Vercel:** No project configuration or live URL is available, and no Render-specific free-tier information is documented in this repository
