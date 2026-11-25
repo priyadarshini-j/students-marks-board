@@ -54,7 +54,7 @@ function StudentReport() {
     const failedSubjects = subjects.filter((subject) => subject.mark < 35);
 
     return (
-        <div className="mx-auto my-10 max-w-[800px] rounded-[10px] border-2 border-[#1F4D3A] bg-white p-[35px] text-[#333] shadow-[0_4px_20px_rgba(0,0,0,0.1)] max-[600px]:m-[15px] max-[600px]:p-[15px] print:m-0 print:max-w-full print:border print:border-[#333] print:p-5 print:shadow-none">
+        <div className="student-report mx-auto my-10 max-w-[800px] rounded-[10px] border-2 border-[#1F4D3A] bg-white p-[35px] text-[#333] shadow-[0_4px_20px_rgba(0,0,0,0.1)] max-[600px]:m-[15px] max-[600px]:p-[15px] print:m-0 print:max-w-full print:border print:border-[#333] print:p-5 print:shadow-none">
 
             
             <div className="border-b-2 border-[#1F4D3A] pb-5 text-center">
@@ -66,7 +66,7 @@ function StudentReport() {
             </div>
 
            
-            <div className="my-[25px] grid grid-cols-2 gap-2.5 rounded-[7px] bg-[#f3f7f4] p-[18px] max-[600px]:grid-cols-1">
+            <div className="my-[25px] grid grid-cols-2 gap-2.5 rounded-[7px] bg-[#f3f7f4] p-[18px] max-[600px]:grid-cols-1 print:grid-cols-2">
                 <p className="my-[5px]"><strong>Student Name:</strong> {student.name}</p>
                 <p className="my-[5px]"><strong>Student ID:</strong> {student.id}</p>
                 <p className="my-[5px]"><strong>Class:</strong> 10</p>

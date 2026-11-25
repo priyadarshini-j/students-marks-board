@@ -5,3 +5,43 @@
 @theme {
   --font-poppins: "Poppins", sans-serif;
 }
+
+@media print {
+  @page {
+    margin: 12mm;
+  }
+
+  body * {
+    visibility: hidden;
+  }
+
+  .student-report,
+  .student-report * {
+    visibility: visible;
+  }
+
+  .student-report {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    border: 0;
+    border-radius: 0;
+    padding: 0;
+    box-shadow: none;
+  }
+
+  .student-report table {
+    width: 100%;
+    table-layout: fixed;
+  }
+
+  .student-report th,
+  .student-report td {
+    padding: 6px 4px;
+    font-size: 10pt;
+    overflow-wrap: anywhere;
+  }
+}
