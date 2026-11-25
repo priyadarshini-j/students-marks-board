@@ -53,6 +53,148 @@ function StudentReport() {
 
     const failedSubjects = subjects.filter((subject) => subject.mark < 35);
 
+    const downloadPdf = async () => {
+        const { jsPDF } = await import("jspdf");
+        const doc = new jsPDF({ unit: "mm", format: "a4" });
+        const pageWidth = doc.internal.pageSize.getWidth();
+        const margin = 15;
+        const contentWidth = pageWidth - margin * 2;
+        const green = [31, 77, 58] as const;
+        const lightGreen = [243, 247, 244] as const;
+
+        doc.setTextColor(...green);
+        doc.setFont("helvetica", "bold");
+        doc.setFontSize(18);
+        doc.text("Government Higher Secondary School", pageWidth / 2, 22, {
+            align: "center"
+        });
+
+        doc.setFontSize(15);
+        doc.text("STUDENT MARKS REPORT", pageWidth / 2, 32, {
+            align: "center"
+        });
+
+        doc.setFont("helvetica", "normal");
+        doc.setTextColor(102, 102, 102);
+        doc.setFontSize(10);
+        doc.text("Quarterly Examination - 2026", pageWidth / 2, 40, {
+            align: "center"
+        });
+        doc.setDrawColor(...green);
+        doc.line(margin, 45, pageWidth - margin, 45);
+
+        const detailsY = 52;
+        doc.setFillColor(...lightGreen);
+        doc.setDrawColor(...green);
+        doc.roundedRect(margin, detailsY, contentWidth, 24, 2, 2, "FD");
+        doc.setTextColor(51, 51, 51);
+        doc.setFontSize(10);
+        doc.text(`Student Name: ${student.name}`, margin + 5, detailsY + 8);
+        doc.text(`Student ID: ${student.id}`, margin + contentWidth / 2, detailsY + 8);
+        doc.text("Class: 10", margin + 5, detailsY + 18);
+        doc.text("Exam: Quarterly Exam", margin + contentWidth / 2, detailsY + 18);
+
+        doc.setTextColor(...green);
+        doc.setFont("helvetica", "bold");
+        doc.setFontSize(12);
+        doc.text("Subject-wise Marks", margin, 86);
+
+        const columnWidths = [15, 37, 39, 47, 42];
+        const headers = ["S.No", "Subject", "Maximum Marks", "Obtained Marks", "Result"];
+        const tableY = 91;
+        const headerHeight = 11;
+        const rowHeight = 9;
+        let headerX = margin;
+
+        headers.forEach((header, index) => {
+            const width = columnWidths[index];
+            doc.setFillColor(...green);
+            doc.setDrawColor(...green);
+            doc.rect(headerX, tableY, width, headerHeight, "FD");
+            doc.setTextColor(255, 255, 255);
+            doc.setFont("helvetica", "bold");
+            doc.setFontSize(8);
+            doc.text(header, headerX + width / 2, tableY + 7, { align: "center" });
+            headerX += width;
+        });
+
+        subjects.forEach((subject, index) => {
+            const rowY = tableY + headerHeight + index * rowHeight;
+            const values = [
+                String(index + 1),
+                subject.name,
+                "100",
+                String(subject.mark),
+                subject.mark >= 35 ? "Pass" : "Fail"
+            ];
+            let cellX = margin;
+
+            values.forEach((value, columnIndex) => {
+                const width = columnWidths[columnIndex];
+                if (index % 2 === 0) {
+                    doc.setFillColor(...lightGreen);
+                } else {
+                    doc.setFillColor(255, 255, 255);
+                }
+                doc.setDrawColor(229, 231, 235);
+                doc.rect(cellX, rowY, width, rowHeight, "FD");
+                doc.setFont("helvetica", "normal");
+                doc.setFontSize(9);
+                if (columnIndex === 4 && subject.mark >= 35) {
+                    doc.setTextColor(21, 128, 61);
+                } else if (columnIndex === 4) {
+                    doc.setTextColor(220, 38, 38);
+                } else {
+                    doc.setTextColor(51, 51, 51);
+                }
+                doc.text(value, cellX + width / 2, rowY + 5.8, { align: "center" });
+                cellX += width;
+            });
+        });
+
+        const summaryY = tableY + headerHeight + subjects.length * rowHeight + 12;
+        doc.setFillColor(...lightGreen);
+        doc.setDrawColor(...green);
+        doc.roundedRect(margin, summaryY, contentWidth, 30, 2, 2, "FD");
+        doc.setTextColor(...green);
+        doc.setFont("helvetica", "bold");
+        doc.setFontSize(12);
+        doc.text("Performance Summary", margin + 5, summaryY + 8);
+        doc.setTextColor(51, 51, 51);
+        doc.setFont("helvetica", "normal");
+        doc.setFontSize(10);
+        doc.text(`Total Marks: ${total} / 500`, margin + 5, summaryY + 17);
+        doc.text(`Percentage: ${percentage.toFixed(2)}%`, margin + 5, summaryY + 25);
+        if (result === "Pass") {
+            doc.setTextColor(21, 128, 61);
+        } else {
+            doc.setTextColor(220, 38, 38);
+        }
+        doc.text(`Overall Result: ${result}`, margin + contentWidth / 2, summaryY + 25);
+
+        if (failedSubjects.length > 0) {
+            const failedY = summaryY + 38;
+            doc.setTextColor(220, 38, 38);
+            doc.setFont("helvetica", "bold");
+            doc.setFontSize(11);
+            doc.text("Failed Subjects", margin, failedY);
+            doc.setFont("helvetica", "normal");
+            doc.setFontSize(10);
+            failedSubjects.forEach((subject, index) => {
+                doc.text(
+                    `${subject.name}: ${subject.mark} marks`,
+                    margin,
+                    failedY + 7 + index * 6
+                );
+            });
+        }
+
+        const safeName =
+            student.name.trim().replace(/[^a-z0-9-_]+/gi, "-").replace(/^-|-$/g, "") ||
+            "student";
+        doc.save(`${safeName}-marks-report.pdf`);
+    };
+
     return (
         <div className="student-report mx-auto my-10 max-w-[800px] rounded-[10px] border-2 border-[#1F4D3A] bg-white p-[35px] text-[#333] shadow-[0_4px_20px_rgba(0,0,0,0.1)] max-[600px]:m-[15px] max-[600px]:p-[15px] print:m-0 print:max-w-full print:border print:border-[#333] print:p-5 print:shadow-none">
 
@@ -142,9 +284,14 @@ function StudentReport() {
 
             <button
                 className="mx-auto mt-[30px] block cursor-pointer rounded-[7px] border-none bg-[#1F4D3A] px-[25px] py-3 text-[15px] font-semibold text-white hover:bg-[#0c3625] print:hidden"
-                onClick={() => window.print()}
+                onClick={() => {
+                    void downloadPdf().catch((error: unknown) => {
+                        console.error("Failed to generate the student report PDF.", error);
+                        window.alert("Could not download the PDF. Please try again.");
+                    });
+                }}
             >
-                Print Report
+                Download PDF
             </button>
         </div>
     );
